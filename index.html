@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindScore — Mental Health Score Prediction</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 2C7 2 3 6.5 3 12c0 3.6 2 6.7 5 8.4V23a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-2.6c3-1.7 5-4.8 5-8.4C23 6.5 19 2 13 2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M9.5 12.5l2 2 4.5-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <div class="brand-text">
+          <span class="brand-name">MindScore</span>
+          <span class="brand-subtitle">Mental Health Score Prediction</span>
+        </div>
+      </div>
+      <div class="status-indicator" id="statusIndicator">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="statusText">ML Model Online</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===================== HERO ===================== -->
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>Understand your mental health score</h1>
+        <p class="hero-description">
+          MindScore looks at your lifestyle, academics, social media habits, and stress levels to
+          estimate a mental health score using a trained machine learning model. Fill in the form
+          below to get your personalised estimate.
+        </p>
+        <p class="hero-note">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M8 7v4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            <circle cx="8" cy="5" r="0.9" fill="currentColor"/>
+          </svg>
+          This prediction is an ML-based estimate and should not be considered a medical diagnosis.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== FORM ===================== -->
+    <section class="form-section">
+      <div class="form-container">
+        <form id="predictionForm" novalidate>
+
+          <!-- SECTION A -->
+          <fieldset class="form-fieldset">
+            <legend>Personal information</legend>
+            <div class="form-grid">
+
+              <div class="field">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" min="10" max="100" placeholder="e.g. 21" required />
+                <span class="field-hint">Between 10 and 100 years</span>
+                <span class="field-error" id="error-age"></span>
+              </div>
+
+              <div class="field">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender" required>
+                  <option value="" disabled selected>Select gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+                <span class="field-error" id="error-gender"></span>
+              </div>
+
+              <div class="field">
+                <label for="country">Country</label>
+                <input type="text" id="country" name="country" placeholder="Enter your country" required />
+                <span class="field-error" id="error-country"></span>
+              </div>
+
+              <div class="field">
+                <label for="academic_level">Academic level</label>
+                <select id="academic_level" name="academic_level" required>
+                  <option value="" disabled selected>Select academic level</option>
+                  <option value="High School">High School</option>
+                  <option value="Undergraduate">Undergraduate</option>
+                  <option value="Graduate">Graduate</option>
+                </select>
+                <span class="field-error" id="error-academic_level"></span>
+              </div>
+
+            </div>
+          </fieldset>
+
+          <!-- SECTION B -->
+          <fieldset class="form-fieldset">
+            <legend>Social media usage</legend>
+            <div class="form-grid">
+
+              <div class="field">
+                <label for="most_used_platform">Most used platform</label>
+                <select id="most_used_platform" name="most_used_platform" required>
+                  <option value="" disabled selected>Select platform</option>
+                  <option value="Facebook">Facebook</option>
+                  <option value="LinkedIn">LinkedIn</option>
+                  <option value="Instagram">Instagram</option>
+                  <option value="Snapchat">Snapchat</option>
+                  <option value="Twitter">Twitter</option>
+                  <option value="YouTube">YouTube</option>
+                  <option value="TikTok">TikTok</option>
+                  <option value="LINE">LINE</option>
+                  <option value="KakaoTalk">KakaoTalk</option>
+                  <option value="VKontakte">VKontakte</option>
+                  <option value="WhatsApp">WhatsApp</option>
+                  <option value="WeChat">WeChat</option>
+                </select>
+                <span class="field-error" id="error-most_used_platform"></span>
+              </div>
+
+              <div class="field">
+                <label for="purpose_of_use">Purpose of use</label>
+                <select id="purpose_of_use" name="purpose_of_use" required>
+                  <option value="" disabled selected>Select purpose</option>
+                  <option value="Networking">Networking</option>
+                  <option value="Education">Education</option>
+                  <option value="Entertainment">Entertainment</option>
+                  <option value="News">News</option>
+                </select>
+                <span class="field-error" id="error-purpose_of_use"></span>
+              </div>
+
+              <div class="field">
+                <label for="avg_daily_usage_hours">Average daily usage (hours/day)</label>
+                <input type="number" id="avg_daily_usage_hours" name="avg_daily_usage_hours" min="0" max="24" step="0.1" placeholder="e.g. 4.5" required />
+                <span class="field-hint">Between 0 and 24 hours</span>
+                <span class="field-error" id="error-avg_daily_usage_hours"></span>
+              </div>
+
+              <div class="field">
+                <label for="daily_unlocks">Daily phone unlocks</label>
+                <input type="number" id="daily_unlocks" name="daily_unlocks" min="0" step="1" placeholder="e.g. 60" required />
+                <span class="field-hint">Whole number, 0 or more</span>
+                <span class="field-error" id="error-daily_unlocks"></span>
+              </div>
+
+            </div>
+          </fieldset>
+
+          <!-- SECTION C -->
+          <fieldset class="form-fieldset">
+            <legend>Lifestyle</legend>
+            <div class="form-grid">
+
+              <div class="field">
+                <label for="study_hours">Study hours (per day)</label>
+                <input type="number" id="study_hours" name="study_hours" min="0" max="24" step="0.1" placeholder="e.g. 3" required />
+                <span class="field-error" id="error-study_hours"></span>
+              </div>
+
+              <div class="field">
+                <label for="physical_activity_hours">Physical activity hours (per day)</label>
+                <input type="number" id="physical_activity_hours" name="physical_activity_hours" min="0" max="24" step="0.1" placeholder="e.g. 1" required />
+                <span class="field-error" id="error-physical_activity_hours"></span>
+              </div>
+
+              <div class="field">
+                <label for="sleep_hours_per_night">Sleep hours (per night)</label>
+                <input type="number" id="sleep_hours_per_night" name="sleep_hours_per_night" min="0" max="24" step="0.1" placeholder="e.g. 7" required />
+                <span class="field-error" id="error-sleep_hours_per_night"></span>
+              </div>
+
+              <div class="field">
+                <label for="stress_level">Stress level</label>
+                <select id="stress_level" name="stress_level" required>
+                  <option value="" disabled selected>Select stress level</option>
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                  <option value="Very High">Very High</option>
+                </select>
+                <span class="field-error" id="error-stress_level"></span>
+              </div>
+
+            </div>
+          </fieldset>
+
+          <!-- SUBMIT -->
+          <div class="form-actions">
+            <div class="api-error" id="apiError" role="alert" hidden></div>
+            <button type="submit" id="predictBtn" class="btn-primary">
+              <span id="predictBtnText">Predict mental health score</span>
+              <span id="predictBtnSpinner" class="spinner" hidden></span>
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </section>
+
+    <!-- ===================== RESULT ===================== -->
+    <section class="result-section" id="resultSection" hidden>
+      <div class="result-grid">
+
+        <!-- Score card -->
+        <div class="result-card score-card">
+          <span class="card-eyebrow">Prediction</span>
+          <h2>Your predicted mental health score</h2>
+
+          <div class="score-visual">
+            <svg viewBox="0 0 200 120" class="score-gauge" aria-hidden="true">
+              <defs>
+                <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#7C5CFC"/>
+                  <stop offset="55%" stop-color="#4F8EF7"/>
+                  <stop offset="100%" stop-color="#1BC9C9"/>
+                </linearGradient>
+              </defs>
+              <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="var(--border)" stroke-width="14" stroke-linecap="round"/>
+              <path id="gaugeArc" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="url(#gaugeGradient)" stroke-width="14" stroke-linecap="round"
+                    stroke-dasharray="251.2" stroke-dashoffset="251.2"/>
+            </svg>
+            <div class="score-number"><span id="scoreNumber">0</span><span class="score-max"> / 10</span></div>
+            <div class="gauge-scale" aria-hidden="true"><span>0</span><span>10</span></div>
+          </div>
+
+          <p class="result-disclaimer">This result is an ML prediction and is not a medical diagnosis.</p>
+
+          <button type="button" id="resetBtn" class="btn-secondary">Predict again</button>
+        </div>
+
+        <!-- Submitted data summary card -->
+        <div class="result-card summary-card">
+          <span class="card-eyebrow">Your inputs</span>
+          <h2>What we used for this prediction</h2>
+          <dl class="summary-list" id="summaryList"></dl>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>MindScore uses a machine learning model to estimate mental health scores from lifestyle data. Always consult a qualified professional for medical advice.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 // Talks to the FastAPI backend at API_URL. No frameworks.
 // ============================================================
 
-const API_URL = "http://127.0.0.1:2200";
+const API_URL = "https://mindscore-l3s0.onrender.com";
 
 // ---- Element references -----------------------------------
 const form = document.getElementById("predictionForm");
